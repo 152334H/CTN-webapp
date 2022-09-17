@@ -1,0 +1,5 @@
+model_lists_extra/*
+app/personal.sh
+app/static/index.js
+app/static/index.css
+app/static/*.wav

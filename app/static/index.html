@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="/static/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+</head>
+<body class="modal-open" style="padding-right: 17px">
+  <div id="main-div">
+    <h1>Controllable TalkNet</h1>
+    <label for="model-dropdown">Character selection</label>
+    <select id="model-dropdown" placeholder="">
+      <option value="" hidden></option>
+      <option value="Custom|default" disabled hidden>Custom model (disabled)</option>
+    </select>
+    <div id="pitch-options">
+      <div id="pitch-checkboxes">
+        <label>
+          <input type="checkbox" name="cbox-pf">
+          Change input pitch (semitones)
+        </label>
+        <label>
+          <input type="checkbox" name="cbox-pc" disabled="true">
+          Auto-tune output
+        </label>
+        <label>
+          <input type="checkbox" name="cbox-dra" checked="true">
+          Disable reference audio
+        </label>
+        <label>
+          <input type="checkbox" name="cbox-srec">
+          Use VQGAN (slow, can worsen output)
+        </label>
+      </div>
+      <div id="semitones">
+        <label for="pitch-factor"> Semitones </label>
+        <input type="number" id="pitch-factor" name="pitch-factor" value="0" style="width: 7em" min="-11" max="11" step="1" disabled>
+      </div>
+    </div>
+    <div id="audio-sourcing" style="flex-direction: column; display: flex; visibility: hidden">
+      <div id="audio-uploading" style="flex-direction: column; display: flex">
+        <input type="file" id="upload-audio" name="upload-audio" accept=".wav, .ogg, .mp3, .flac, .aac" hidden class=inputfile>
+        <button id="upload-audio-button">upload reference audio</button>
+        <audio id="uploaded-audio" controls style="visibility: hidden">
+          <source src="" id="uploaded-audio-src"/>
+        </audio>
+      </div>
+      <div id="audio-debugging" style="flex-direction: column; display: none">
+        <button id="debug-audio-button">debug pitch</button>
+        <audio id="debug-audio" controls style="visibility:hidden">
+          <source src="" id="debug-audio-src"/>
+        </audio>
+      </div>
+    </div>
+    <label for="transcript-input">Transcript</label>
+    <textarea maxlength=200 id=transcript-input></textarea>
+    <div id="audio-creation">
+      <button id="gen-button" name="gen-button" type="submit" value="GENERATE">GENERATE</button>
+      <audio id="audio-out" controls style="visibility: hidden">
+        <source src="" id="audio-out-src"/>
+      </audio>
+      <div id="generated-info" style="font-style: italic">
+      </div>
+    </div>
+    <p></p>
+    <a href='#' id="open-tips">Tips</a>
+    <a href='#' id="open-license">License info</a>
+  </div>
+  <div id="modal-body-about" hidden>
+    <p>This is a vanilla JS reimplementation of <a href="https://github.com/SortAnon/ControllableTalkNet">Controllable TalkNet</a><br>
+      The license info for the original Controllable Talknet project can be found below:
+      <hr>
+      Copyright (C) 2021 Pony Preservation Project<br><br>
+      This program is free software: you can redistribute it and/or modify<br>
+      it under the terms of the GNU Affero General Public License as published by<br>
+      the Free Software Foundation, either version 3 of the License, or<br>
+      (at your option) any later version.<br><br>
+      This program is distributed in the hope that it will be useful,<br>
+      but WITHOUT ANY WARRANTY; without even the implied warranty of<br>
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<br>
+    </p>
+    <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+      See the GNU Affero General Public License for more details.
+    </a>
+    <p><br>
+      Controllable TalkNet is built on top of these Python libraries:
+    </p>
+    <a href="https://pypi.org/project/nemo-toolkit/">
+      NVIDIA NeMo
+    </a><br>
+    <a href="https://pypi.org/project/dash/">
+      Dash
+    </a><br>
+    <a href="https://github.com/CompVis/taming-transformers">
+      Taming Transformers
+    </a><br>
+    <a href="https://github.com/jik876/hifi-gan">
+      HiFi-GAN
+    </a><br>
+    <a href="https://pypi.org/project/crepe/">
+      CREPE Pitch Tracker
+    </a><br>
+    <a href="https://pypi.org/project/torchcrepe/">
+      torchcrepe
+    </a><br>
+  </div>
+  <div id="modal-body-tips" hidden>
+    <ol>
+      <li>If you want to use TalkNet as regular text-to-speech system, without any reference audio, tick the "Disable reference audio" checkbox.</li>
+      <li>You can use ARPABET to override the pronunciation of words, like this: She made a little bow, then she picked up her {B OW}.</li>
+      <li>If you're running out of memory generating lines, try to work with shorter clips.</li>
+      <li>The singing models are trained on very little data, and can have a hard time pronouncing certain words. Try experimenting with ARPABET and punctuation.</li>
+      <li>If the voice is off-key, the problem is usually with the extracted pitch. Press "Debug pitch" to listen to it. Reference audio with lots of echo/reverb or background noise, or singers with a very high vocal range can cause issues.</li>
+      <li>If the singing voice sounds strained, try enabling "Change input pitch" and adjusting it up or down a few semitones. If you're remixing a song, remember to pitch-shift your background track as well.</li>
+  </div>
+  <script src="/static/index.js"></script>
+</body>

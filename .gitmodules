@@ -1,0 +1,9 @@
+[submodule "hifi-gan"]
+	path = hifi-gan
+	url = https://github.com/SortAnon/hifi-gan
+[submodule "ControllableTalkNet"]
+	path = ControllableTalkNet
+	url = https://github.com/SortAnon/ControllableTalkNet
+[submodule "NeMo"]
+	path = NeMo
+	url = https://github.com/SortAnon/NeMo

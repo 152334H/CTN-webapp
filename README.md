@@ -2,6 +2,8 @@
 
 This is a fork of the Controllable TalkNet project that can be deployed as an online webapp for the public to use.
 
+![](phone.jpg)
+
 ## How to run
 ### Dependencies
 * Docker
@@ -15,6 +17,10 @@ This is a fork of the Controllable TalkNet project that can be deployed as an on
 ./rebuild.sh # This is equivalent to:
 # DEVICE=cpu SERVER_TYPE=debug PRELOAD_MODELS=false MODEL_CACHE_SIZE=4 ./rebuild.sh
 ```
+The webapp will be accessible at http://localhost:8050.
+
+The models from the original Controllable TalkNet project are available by default. Delete the model list at `ControllableTalkNet/model_lists/sortanon_models.json` if you do not need them.
+
 #### GPU-enabled runtime
 ```bash
 DEVICE=gpu ./rebuild.sh --gpus all
@@ -32,7 +38,7 @@ DEVICE=gpu ./rebuild.sh --gpus all
   The number of models to keep cached in memory during runtime. Increasing this value will increase the amount of RAM this app requires to not crash.
 * `PRELOAD_MODELS` - `true` or `false`
   
-  Whether to download and read all models into memory upon startup. If the number of models available is larger than `MODEL_CACHE_SIZE`, only `MODEl_CACHE_SIZE` models will remain in memory after startup.
+  Whether to download and read all models into memory upon startup. If the number of models available is larger than `MODEL_CACHE_SIZE`, only `MODEL_CACHE_SIZE` models will remain in memory after startup.
 
 Additional options can be passed to `docker run` by simply appending them to the `./rebuild.sh` command. For example, to limit the memory use of this container to 16GB:
 ```bash

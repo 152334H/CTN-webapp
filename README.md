@@ -15,7 +15,7 @@ This is a fork of the Controllable TalkNet project that can be deployed as an on
 #### Default that should work on most machines:
 ```bash
 ./rebuild.sh # This is equivalent to:
-# DEVICE=cpu SERVER_TYPE=debug PRELOAD_MODELS=false MODEL_CACHE_SIZE=4 ./rebuild.sh
+# PORT=8050 DEVICE=cpu SERVER_TYPE=debug PRELOAD_MODELS=false MODEL_CACHE_SIZE=4 ./rebuild.sh
 ```
 The webapp will be accessible at http://localhost:8050.
 
@@ -49,6 +49,7 @@ Additional options can be passed to `docker run` by simply appending them to the
 * The `Custom model` option has been removed from the app. They present an obvious security risk and I am not interested in attempting to safety validate arbitrary models. Please add all models desired to `model_lists_extra/` before building the app.
 * The frontend design is slightly different from the original CTN project. It's a static HTML/JS/CSS copy of the original Jupyter Dash app.
 * The contents of individual POST requests are not logged. However, audio files uploaded to the server are saved until the container is destroyed.
-* The app usually breaks if `uwsgi` is configured to run with multiprocessing. I was unable to find the source of this bug.
-* There is a memory leak somewhere in the app, unrelated to model caching. I was unable to find the source of this bug.
+* NeMo will cause deadlocks in model loading if `uwsgi` is configured to run with multiprocessing.
+* The app will experience a permanent spike in memory allocation after the first generation.
+* Information on how to configure nginx or how to link this app to a public website are beyond the scope of this repo.
 

@@ -3,6 +3,9 @@ import os
 import ffmpeg
 import controllable_talknet as ctn
 
+if not os.path.exists('./uploads'):
+    os.mkdir('./uploads')
+
 def wav_path_from_ID(audio_id: str):
     if not audio_id.isalnum():
         raise TypeError('Invalid audio ID provided.')
